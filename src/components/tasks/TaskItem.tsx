@@ -3,22 +3,17 @@ import { TasksData } from "~/types";
 import { classNames, convertToAmPm, formatDate } from "~/utils/functions";
 import { motion } from "framer-motion";
 import { taskItem } from "~/utils/framer";
+import { useStore } from "~/store";
 
 interface IProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "className" | "style"> {
   taskInfo: TasksData;
   selected: boolean;
-  index: number;
-  setTasks: React.Dispatch<React.SetStateAction<TasksData[]>>;
 }
 
-export const TaskItem = ({
-  taskInfo,
-  setTasks,
-  index,
-  selected,
-  ...rest
-}: IProps) => {
+export const TaskItem = ({ taskInfo, selected, ...rest }: IProps) => {
+  const updateTask = useStore((state) => state.updateTask);
+
   return (
     <motion.li
       layout
@@ -39,13 +34,7 @@ export const TaskItem = ({
           <input
             onClick={(e) => e.stopPropagation()}
             checked={taskInfo.completed}
-            onChange={(e) => {
-              setTasks((prevTasks) => {
-                const updatedTasks = [...prevTasks];
-                updatedTasks[index].completed = e.target.checked;
-                return updatedTasks;
-              });
-            }}
+            onChange={() => updateTask(taskInfo.id)}
             type='checkbox'
             className='rounded-[6px] text-[#3F5BF6] w-5 h-5  border-[#D0D5DD] bg-white '
           />

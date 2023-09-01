@@ -78,14 +78,7 @@ function App() {
       >
         <Sheet.Container className='rounded-3xl'>
           <Sheet.Content>
-            {task.title && !(showTask || isEditingTask) && (
-              <TaskDetails
-                setTasks={setTasks}
-                setIsEditingTask={setIsEditingTask}
-                setTask={setTask}
-                task={task}
-              />
-            )}
+            {task.title && !(showTask || isEditingTask) && <TaskDetails />}
             {(showTask || isEditingTask) && (
               <Task
                 setTasks={setTasks}
@@ -205,12 +198,7 @@ function App() {
               <aside className='w-full hidden sm:flex flex-1 min-w-[394px]  col-span-2'>
                 <AnimatePresence mode='wait'>
                   {task.title && !(showTask || isEditingTask) && (
-                    <TaskDetails
-                      setTasks={setTasks}
-                      setIsEditingTask={setIsEditingTask}
-                      setTask={setTask}
-                      task={task}
-                    />
+                    <TaskDetails />
                   )}
                   {(showTask || isEditingTask) && (
                     <Task
