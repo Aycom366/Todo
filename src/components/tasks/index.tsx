@@ -99,7 +99,7 @@ export const Task = ({
       onSubmit={(e) => {
         e.preventDefault();
       }}
-      className='w-full h-full  border border-[#F2F4F7] gap-4  flex flex-col rounded-lg font-workSans p-4 px-8 shadow-form-shadow bg-white'
+      className='w-full h-full  sm:border border-[#F2F4F7] gap-4  flex flex-col rounded-lg font-workSans p-4 px-6 sm:px-8 sm:shadow-form-shadow bg-white'
     >
       <header className='flex-row-between'>
         <h3 className='text-[18px] text-[#101828] font-semibold leading-[28px]'>

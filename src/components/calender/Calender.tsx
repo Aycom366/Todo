@@ -56,7 +56,7 @@ export const Calender = ({
     <motion.section
       {...slideIn}
       className={classNames(
-        "w-full py-[20px] border border-[#F2F4F7] shadow-form-shadow px-6 font-workSans max-w-md gap-2 flex flex-col rounded-lg",
+        "w-full py-[20px] sm:border border-[#F2F4F7] sm:shadow-form-shadow px-6 font-workSans max-w-md gap-2 flex flex-col rounded-lg",
         sectionClasses
       )}
     >

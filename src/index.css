@@ -20,6 +20,8 @@
   font-weight: 700;
 }
 
+/* Loader */
+
 .loader {
   border: 4px solid #f3f3f3;
   border-top: 4px solid #0e31f2;
@@ -37,6 +39,8 @@
     transform: rotate(360deg);
   }
 }
+
+/* TimePicker */
 
 .embla {
   position: relative;
@@ -126,4 +130,16 @@
   font-size: 1rem;
   transform: translateX(-40px);
   pointer-events: none;
+}
+
+/* BottomSheet */
+
+.react-modal-sheet-backdrop {
+  background: #00000066 !important;
+}
+
+.react-modal-sheet-container {
+  border-radius: 28px 28px 0 0 !important;
+  padding-top: 16px;
+  box-shadow: none !important;
 }
