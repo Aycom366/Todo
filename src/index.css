@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .flex-row-between {
+    @apply flex items-center justify-between w-full;
+  }
+  .button {
+    @apply outline-none border-none transform duration-200 ease-out bg-[#3F5BF6] hover:shadow-button-hover flex justify-center items-center shadow-button hover:bg-[#0E31F2] text-white gap-2 rounded-lg p-[10px_16px_10px_16px] font-workSans font-semibold leading-[20px] text-sm;
+  }
+  .button-transparent {
+    @apply transform duration-200 ease-out  hover:shadow-button-hover flex justify-center items-center shadow-button border  text-[#667085] border-[#D0D5DD] gap-2 rounded-lg p-[10px_16px_10px_16px] font-workSans font-semibold leading-[20px] text-sm;
+  }
+}
+
+@font-face {
+  font-family: Satoshi;
+  src: url("assets/fonts/satoshi/Satoshi-Bold.otf") format("opentype");
+  font-weight: 700;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #0e31f2;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.embla {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 200px;
+  max-width: 30rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.embla:before,
+.embla:after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  content: "";
+  display: block;
+  height: calc(50% - 32px / 2);
+  z-index: 1;
+  pointer-events: none;
+}
+.embla:before {
+  top: -0.5px;
+  border-bottom: 0.5px solid #ccc;
+}
+.embla:after {
+  bottom: -0.5px;
+  border-top: 0.5px solid #ccc;
+}
+.embla__ios-picker {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  min-width: 50%;
+  justify-content: center;
+  line-height: 1;
+  font-size: 1.8rem;
+}
+.embla__ios-picker__scene {
+  min-width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.embla__ios-picker__viewport {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  perspective: 1000px;
+  align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.embla__wheel__slide--selected {
+  color: green;
+}
+
+.embla__ios-picker__container {
+  height: 24px;
+  width: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.embla__ios-picker__slide {
+  position: absolute;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  opacity: 0;
+}
+.embla__ios-picker__label {
+  font-weight: 600;
+  font-size: 1rem;
+  transform: translateX(-40px);
+  pointer-events: none;
+}
