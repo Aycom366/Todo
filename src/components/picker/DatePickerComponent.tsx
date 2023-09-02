@@ -34,6 +34,7 @@ export const DatePickerComponent = ({
   return (
     <>
       <button
+        data-testid='select-date'
         onClick={() => setShowingDatePicker((prev) => !prev)}
         ref={setReferenceElement}
         className='button-transparent'

@@ -13,10 +13,10 @@ interface IStore {
   task: TasksData;
   setTask: (arg: TasksData) => void;
   showTask: boolean;
-  setIsEditingTask: (arg: boolean) => void;
-
-  isEditingTask: boolean;
   setShowTask: (arg: boolean) => void;
+
+  setIsEditingTask: (arg: boolean) => void;
+  isEditingTask: boolean;
 }
 
 export const useStore = create<IStore>()((set) => ({

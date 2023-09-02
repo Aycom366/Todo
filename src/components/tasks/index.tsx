@@ -88,6 +88,7 @@ export const Task = () => {
         e.preventDefault();
       }}
       className='w-full h-full  sm:border border-[#F2F4F7] gap-4  flex flex-col rounded-lg font-workSans p-4 px-6 sm:px-8 sm:shadow-form-shadow bg-white'
+      data-testid='task'
     >
       <header className='flex-row-between'>
         <h3 className='text-[18px] text-[#101828] font-semibold leading-[28px]'>
@@ -151,7 +152,11 @@ export const Task = () => {
         >
           Cancel
         </button>
-        <button onClick={updateTasks} className='button w-full'>
+        <button
+          data-testid='create-edit-task'
+          onClick={updateTasks}
+          className='button w-full'
+        >
           {isEditingTask ? "Save" : "Add"}
         </button>
       </footer>

@@ -47,8 +47,6 @@ function App() {
     return tasks?.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, tasks]);
 
-  useEffect(() => {}, [selectedDate]);
-
   useEffect(() => {
     async function fetchTodos() {
       try {
@@ -111,7 +109,7 @@ function App() {
       </Sheet>
       <main style={{ height }} className='w-full py-[25px] sm:py-0 mx-auto '>
         <Header />
-        <section className='max-w-[1440px] pb-[24px] sm:pb-[96px]  pt-[32px] w-full sm:py-[48px] flex flex-col gap-8   mx-auto px-4 xl:px-[164px]'>
+        <section className='max-w-[1440px] pb-[24px] sm:pb-[96px]  pt-[32px] w-full sm:py-[48px] flex flex-col gap-8 mx-auto px-4 xl:px-[164px]'>
           <header className='w-full flex-row-between'>
             <div className='flex-col font-workSans items-start'>
               <h2 className=' font-semibold text-[24px] leading-[32px] sm:text-[30px] sm:leading-[38px] text-[#101828]'>
@@ -130,11 +128,17 @@ function App() {
             </button>
           </header>
           {isloading ? (
-            <div className='py-[100px] grid w-full h-full place-items-center'>
+            <div
+              data-testid='loading-spinner'
+              className='py-[100px] grid w-full h-full place-items-center'
+            >
               <div className='loader'></div>
             </div>
           ) : (
-            <section className='w-full  items-start grid grid-cols-1 sm:grid-cols-4  lg:grid-cols-5 sm:pr-4  gap-6'>
+            <section
+              data-testid='task-list'
+              className='w-full  items-start grid grid-cols-1 sm:grid-cols-4  lg:grid-cols-5 sm:pr-4  gap-6'
+            >
               <section className='w-full sm:border-r border-[#EAECF0] sm:pr-6 flex flex-col gap-8 col-span-1 sm:col-span-2 lg:col-span-3'>
                 <CalenderRowList
                   setSelectedDate={setSelectedDate}
