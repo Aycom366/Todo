@@ -12,7 +12,7 @@ interface IProps
 }
 
 export const TaskItem = ({ taskInfo, selected, ...rest }: IProps) => {
-  const updateTask = useStore((state) => state.updateTask);
+  const updateCompletedTask = useStore((state) => state.updateCompletedTask);
 
   return (
     <motion.li
@@ -34,7 +34,7 @@ export const TaskItem = ({ taskInfo, selected, ...rest }: IProps) => {
           <input
             onClick={(e) => e.stopPropagation()}
             checked={taskInfo.completed}
-            onChange={() => updateTask(taskInfo.id)}
+            onChange={() => updateCompletedTask(taskInfo.id)}
             type='checkbox'
             className='rounded-[6px] text-[#3F5BF6] w-5 h-5  border-[#D0D5DD] bg-white '
           />

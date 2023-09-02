@@ -38,7 +38,7 @@ export const TaskDetails = () => {
         <div className='flex gap-2 flex-col'>
           <p className='flex gap-2 leading-[19.2px]  items-center'>
             <img src={Calender} alt='Calender Icon' />
-            <span>{format(task.date, "do MMMM, yyyy")}</span>
+            <span>{format(task.date ?? new Date(), "do MMMM, yyyy")}</span>
           </p>
           <p className='flex uppercase leading-[19.2px] gap-2 items-center'>
             <img src={Clock} alt='Clock Icon' />
@@ -54,7 +54,7 @@ export const TaskDetails = () => {
             removeTask(task.id);
             closeTask();
           }}
-          className=' w-full font-semibold leading-[20px] text-sm rounded-lg p-[10px_16px_10px_16px] text-[#344054] border-[#D0D5DD] hover:bg-transparent border bg-white'
+          className='w-full font-semibold leading-[20px] text-sm rounded-lg p-[10px_16px_10px_16px] text-[#344054] border-[#D0D5DD] hover:bg-transparent border bg-white'
         >
           Delete
         </button>
