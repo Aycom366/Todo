@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useWindowDimension } from "utils/hooks";
 import AddIcon from "assets/images/add.png";
-import Microphone from "assets/images/microPhone.png";
+import Microphone from "assets/images/microphone.png";
 import { Header } from "components/header";
 import { Task } from "components/tasks";
 import { useEffect, useMemo, useState } from "react";
