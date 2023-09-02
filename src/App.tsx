@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useWindowDimension } from "utils/hooks";
 import AddIcon from "assets/images/add.png";
@@ -6,10 +7,8 @@ import { Header } from "components/header";
 import { Task } from "components/tasks";
 import { useEffect, useMemo, useState } from "react";
 import { Calender } from "components/calender/Calender";
-import { startOfDay } from "date-fns";
 import { CalenderRowList } from "components/calender/CalenderRowList";
 import { AnimatePresence } from "framer-motion";
-import { TasksData } from "types";
 import { TaskItem } from "./components/tasks/TaskItem";
 import { TaskDetails } from "./components/tasks/TaskDetails";
 import { Pagination } from "./components/tasks/Pagination";
@@ -17,18 +16,30 @@ import { motion } from "framer-motion";
 import { taskContainer } from "./utils/framer";
 import { toast } from "react-hot-toast";
 import Sheet from "react-modal-sheet";
+import { useStore } from "./store";
+import { format, startOfDay } from "date-fns";
 
 function App() {
   const { height } = useWindowDimension();
-  const [showTask, setShowTask] = useState(false);
   const [selectedDate, setSelectedDate] = useState(startOfDay(new Date()));
+
+  const isEditingTask = useStore((state) => state.isEditingTask);
+  const setIsEditingTask = useStore((state) => state.setIsEditingTask);
+
+  const showTask = useStore((state) => state.showTask);
+  const setShowTask = useStore((state) => state.setShowTask);
+
+  const tasks = useStore((state) => state.tasks);
+  const setTasks = useStore((state) => state.setTasks);
+
+  const task = useStore((state) => state.task);
+  const setTask = useStore((state) => state.setTask);
+
   const [isloading, setIsloading] = useState(false);
-  const [isEditingTask, setIsEditingTask] = useState(false);
-  const [tasks, setTasks] = useState<TasksData[]>([]);
-  const [task, setTask] = useState({} as TasksData);
   const [currentPage, setCurrentPage] = useState(1);
   const [snapPoints, setSnapPoints] = useState([1, 0.85]);
   const pageSize = 5;
+
   const currentTableData = useMemo(() => {
     if (!tasks || tasks.length === 0) return [];
     const firstPageIndex = (currentPage - 1) * pageSize;
@@ -36,13 +47,15 @@ function App() {
     return tasks?.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, tasks]);
 
+  useEffect(() => {}, [selectedDate]);
+
   useEffect(() => {
     async function fetchTodos() {
       try {
         setIsloading(true);
         const res = await fetch("https://jsonplaceholder.typicode.com/todos");
         const todo = await res.json();
-        setTasks(() =>
+        setTasks(
           todo.slice(0, 5).map(({ id, completed, title }: any) => ({
             id,
             completed,
@@ -67,9 +80,15 @@ function App() {
     setShowTask(false);
   }
 
+  function openTaskComponent() {
+    setShowTask(true);
+    setSnapPoints([1, 0.55]);
+  }
+
   return (
     <>
       <Sheet
+        disableDrag
         className='sm:hidden'
         isOpen={showTask || isEditingTask || !!task.title}
         onClose={closeSheet}
@@ -78,24 +97,8 @@ function App() {
       >
         <Sheet.Container className='rounded-3xl'>
           <Sheet.Content>
-            {task.title && !(showTask || isEditingTask) && (
-              <TaskDetails
-                setTasks={setTasks}
-                setIsEditingTask={setIsEditingTask}
-                setTask={setTask}
-                task={task}
-              />
-            )}
-            {(showTask || isEditingTask) && (
-              <Task
-                setTasks={setTasks}
-                setIsEditingTask={setIsEditingTask}
-                isEditingTask={isEditingTask}
-                setTask={setTask}
-                task={task}
-                setShowTask={setShowTask}
-              />
-            )}
+            {task.title && !(showTask || isEditingTask) && <TaskDetails />}
+            {(showTask || isEditingTask) && <Task />}
             {!task.title && !showTask && (
               <Calender
                 selectedDate={selectedDate}
@@ -119,7 +122,7 @@ function App() {
               </p>
             </div>
             <button
-              onClick={() => setShowTask(true)}
+              onClick={openTaskComponent}
               className='button hidden sm:flex'
             >
               <img src={AddIcon} alt='Add Icon' />
@@ -149,10 +152,8 @@ function App() {
                           className='w-full gap-4 flex flex-col'
                         >
                           <AnimatePresence>
-                            {currentTableData.map((taskInfo, index) => (
+                            {currentTableData.map((taskInfo) => (
                               <TaskItem
-                                index={index}
-                                setTasks={setTasks}
                                 onClick={() => {
                                   setTask(taskInfo);
                                   setShowTask(false);
@@ -179,9 +180,12 @@ function App() {
                       </div>
                     ) : (
                       <div className='w-full gap-1 h-full py-[50px] grid  place-items-center'>
-                        <p>No Task Available</p>
+                        <p>
+                          No Task Available for{" "}
+                          {format(selectedDate, "do MMMM, yyyy")}
+                        </p>
                         <button
-                          onClick={() => setShowTask(true)}
+                          onClick={openTaskComponent}
                           className='button py-1'
                         >
                           <img src={AddIcon} alt='Add Icon' />
@@ -191,10 +195,7 @@ function App() {
                     )}
                   </div>
                   <button
-                    onClick={() => {
-                      setShowTask(true);
-                      setSnapPoints([1, 0.55]);
-                    }}
+                    onClick={openTaskComponent}
                     className='flex h-[48px] rounded-lg shadow-[0px_1px_2px_0px_#1018280D] px-3 flex-row-between bg-[#F9FAFB] sm:hidden border border-[#D0D5DD]'
                   >
                     <span className='text-[#475467]'>Input task</span>
@@ -205,23 +206,9 @@ function App() {
               <aside className='w-full hidden sm:flex flex-1 min-w-[394px]  col-span-2'>
                 <AnimatePresence mode='wait'>
                   {task.title && !(showTask || isEditingTask) && (
-                    <TaskDetails
-                      setTasks={setTasks}
-                      setIsEditingTask={setIsEditingTask}
-                      setTask={setTask}
-                      task={task}
-                    />
+                    <TaskDetails />
                   )}
-                  {(showTask || isEditingTask) && (
-                    <Task
-                      setTasks={setTasks}
-                      setIsEditingTask={setIsEditingTask}
-                      isEditingTask={isEditingTask}
-                      setTask={setTask}
-                      task={task}
-                      setShowTask={setShowTask}
-                    />
-                  )}
+                  {(showTask || isEditingTask) && <Task />}
                   {!task.title && !showTask && (
                     <Calender
                       selectedDate={selectedDate}

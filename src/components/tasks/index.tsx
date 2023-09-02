@@ -9,24 +9,19 @@ import { motion } from "framer-motion";
 import { slideIn } from "~/utils/framer";
 import { TasksData } from "~/types";
 import { toast } from "react-hot-toast";
+import { useStore } from "~/store";
 
-interface IProps {
-  setTask: React.Dispatch<React.SetStateAction<TasksData>>;
-  setTasks: React.Dispatch<React.SetStateAction<TasksData[]>>;
-  task?: TasksData;
-  setIsEditingTask: React.Dispatch<React.SetStateAction<boolean>>;
-  isEditingTask: boolean;
-  setShowTask: React.Dispatch<React.SetStateAction<boolean>>;
-}
+export const Task = () => {
+  const task = useStore((state) => state.task);
+  const setIsEditingTask = useStore((state) => state.setIsEditingTask);
+  const isEditingTask = useStore((state) => state.isEditingTask);
+  const setShowTask = useStore((state) => state.setShowTask);
+  const setTask = useStore((state) => state.setTask);
+  const updateTask = useStore((state) => state.updateTask);
+  const appendToAvailableTask = useStore(
+    (state) => state.appendToAvailableTask
+  );
 
-export const Task = ({
-  setTask,
-  setShowTask,
-  setTasks,
-  isEditingTask,
-  setIsEditingTask,
-  task,
-}: IProps) => {
   const [startTimeValue, setStartTimeValue] = useState(
     task?.startTime ? task.startTime : "00:00"
   );
@@ -81,15 +76,8 @@ export const Task = ({
     } as TasksData;
 
     if (isEditingTask) {
-      setTasks((prev) => {
-        return prev.map((item) => {
-          if (item.id === newTask.id) {
-            return newTask;
-          }
-          return item;
-        });
-      });
-    } else setTasks((prev) => [...prev, { ...newTask }]);
+      updateTask(newTask);
+    } else appendToAvailableTask(newTask);
     closeTask();
   }
 

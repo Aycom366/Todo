@@ -22,7 +22,8 @@ function isWithin7Days(date: Date) {
   return date >= sevenDaysAgo;
 }
 
-export function convertToAmPm(time24hr: string) {
+export function convertToAmPm(time24hr?: string) {
+  if (!time24hr) return "";
   const [hours, minutes] = time24hr.split(":").map(Number);
   const amPm = hours < 12 ? "am" : "pm";
   let hours12hr = hours % 12;

@@ -6,20 +6,14 @@ import Calender from "assets/images/blueCalender.png";
 import Clock from "assets/images/blueClock.png";
 import { format } from "date-fns";
 import { convertToAmPm } from "~/utils/functions";
+import { useStore } from "~/store";
 
-interface IProps {
-  setTask: React.Dispatch<React.SetStateAction<TasksData>>;
-  task: TasksData;
-  setTasks: React.Dispatch<React.SetStateAction<TasksData[]>>;
-  setIsEditingTask: React.Dispatch<React.SetStateAction<boolean>>;
-}
+export const TaskDetails = () => {
+  const setTask = useStore((state) => state.setTask);
+  const removeTask = useStore((state) => state.removeTask);
+  const task = useStore((state) => state.task);
+  const setIsEditingTask = useStore((state) => state.setIsEditingTask);
 
-export const TaskDetails = ({
-  setTask,
-  setTasks,
-  task,
-  setIsEditingTask,
-}: IProps) => {
   function closeTask() {
     setTask({} as TasksData);
   }
@@ -44,7 +38,7 @@ export const TaskDetails = ({
         <div className='flex gap-2 flex-col'>
           <p className='flex gap-2 leading-[19.2px]  items-center'>
             <img src={Calender} alt='Calender Icon' />
-            <span>{format(task.date, "do MMMM, yyyy")}</span>
+            <span>{format(task.date ?? new Date(), "do MMMM, yyyy")}</span>
           </p>
           <p className='flex uppercase leading-[19.2px] gap-2 items-center'>
             <img src={Clock} alt='Clock Icon' />
@@ -57,12 +51,10 @@ export const TaskDetails = ({
       <footer className='flex-row-between pt-4 font-workSans gap-3'>
         <button
           onClick={() => {
-            setTasks((prev) => {
-              return prev.filter((taskData) => taskData.id !== task.id);
-            });
+            removeTask(task.id);
             closeTask();
           }}
-          className=' w-full font-semibold leading-[20px] text-sm rounded-lg p-[10px_16px_10px_16px] text-[#344054] border-[#D0D5DD] hover:bg-transparent border bg-white'
+          className='w-full font-semibold leading-[20px] text-sm rounded-lg p-[10px_16px_10px_16px] text-[#344054] border-[#D0D5DD] hover:bg-transparent border bg-white'
         >
           Delete
         </button>
