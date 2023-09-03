@@ -86,6 +86,7 @@ function App() {
   return (
     <>
       <Sheet
+        data-testid='bottom-sheet'
         disableDrag
         className='sm:hidden'
         isOpen={showTask || isEditingTask || !!task.title}

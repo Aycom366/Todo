@@ -13,4 +13,11 @@ describe("App Component", () => {
     const titleElement = screen.getByText(/My Tasks/i);
     expect(titleElement).toBeInTheDocument();
   });
+
+  it("should have the tailwind class sm:hidden and should be in the document", async () => {
+    render(<App />);
+    const sheetElement = screen.getByTestId("bottom-sheet");
+    expect(sheetElement).toBeInTheDocument();
+    expect(sheetElement).toHaveClass("sm:hidden");
+  });
 });

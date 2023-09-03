@@ -44,6 +44,7 @@ export const DatePickerComponent = ({
       </button>
       {showingDatePicker && (
         <div
+          data-testid='calender-popover'
           ref={setPopperElement}
           style={styles.popper}
           {...attributes.popper}

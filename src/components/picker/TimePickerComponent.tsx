@@ -47,6 +47,7 @@ export const TimePickerComponent = ({
       </button>
       {showingCalender && (
         <div
+          data-testid='time-popover'
           ref={setPopperElement}
           style={styles.popper}
           {...attributes.popper}
